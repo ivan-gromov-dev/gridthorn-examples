@@ -911,6 +911,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "gridthorn_example_deterministic_replay"
+version = "0.1.0"
+dependencies = [
+ "gridthorn_simulation",
+ "gridthorn_world",
+]
+
+[[package]]
 name = "gridthorn_example_diagnostics_flow"
 version = "0.1.0"
 dependencies = [
@@ -953,6 +961,10 @@ dependencies = [
  "wgpu",
  "windows",
 ]
+
+[[package]]
+name = "gridthorn_simulation"
+version = "0.1.0"
 
 [[package]]
 name = "gridthorn_world"

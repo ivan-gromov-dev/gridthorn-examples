@@ -6,6 +6,7 @@ Every example owns a top-level directory and Cargo package:
 
 ```text
 gridthorn-examples/
+├── deterministic-replay/
 ├── diagnostics-flow/
 ├── headless-schedule/
 ├── schedule-loop/
@@ -42,4 +43,10 @@ CLI from the sibling engine repository:
 
 ```console
 cargo run -p gridthorn_cli -- run ../gridthorn-examples/diagnostics-flow
+```
+
+Run the same fixed-step command stream twice and verify its state fingerprint:
+
+```console
+cargo run -p gridthorn_example_deterministic_replay
 ```

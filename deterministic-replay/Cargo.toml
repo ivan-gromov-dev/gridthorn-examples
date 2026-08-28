@@ -1,0 +1,15 @@
+[package]
+name = "gridthorn_example_deterministic_replay"
+description = "Executable Milestone 0 deterministic fixed-step replay example"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+gridthorn_simulation = { path = "../../gridthorn-engine/crates/gridthorn_simulation" }
+gridthorn_world = { path = "../../gridthorn-engine/crates/gridthorn_world" }
+
+[lints]
+workspace = true

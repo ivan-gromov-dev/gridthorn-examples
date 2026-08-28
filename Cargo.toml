@@ -1,5 +1,6 @@
 [workspace]
 members = [
+    "deterministic-replay",
     "diagnostics-flow",
     "headless-schedule",
     "schedule-loop",

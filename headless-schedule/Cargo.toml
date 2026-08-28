@@ -1,0 +1,14 @@
+[package]
+name = "gridthorn_example_headless_schedule"
+description = "Executable Milestone 0 headless fixed-update schedule example"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+gridthorn_world = { path = "../../gridthorn-engine/crates/gridthorn_world" }
+
+[lints]
+workspace = true

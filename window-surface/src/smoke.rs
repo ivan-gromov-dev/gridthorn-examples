@@ -1,6 +1,6 @@
 use std::time::{Duration, Instant};
 
-use gridthorn_app::{WindowControl, WindowLifecycle};
+use gridthorn_app::{ApplicationError, WindowControl, WindowLifecycle};
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 enum SmokePhase {
@@ -36,16 +36,17 @@ impl SmokeLifecycle {
 }
 
 impl WindowLifecycle for SmokeLifecycle {
-    fn started(&mut self, control: &mut WindowControl) {
+    fn started(&mut self, control: &mut WindowControl) -> Result<(), ApplicationError> {
         if self.enabled {
             self.deadline = Instant::now() + Duration::from_millis(200);
             control.wake_at(self.deadline);
         }
+        Ok(())
     }
 
-    fn idle(&mut self, control: &mut WindowControl) {
+    fn idle(&mut self, control: &mut WindowControl) -> Result<(), ApplicationError> {
         if !self.enabled || self.phase == SmokePhase::Complete || Instant::now() < self.deadline {
-            return;
+            return Ok(());
         }
 
         match self.phase {
@@ -68,6 +69,7 @@ impl WindowLifecycle for SmokeLifecycle {
             }
             SmokePhase::Complete => {}
         }
+        Ok(())
     }
 }
 

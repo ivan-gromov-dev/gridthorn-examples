@@ -1,4 +1,4 @@
-use gridthorn_app::{WindowControl, WindowLifecycle};
+use gridthorn_app::{ApplicationError, WindowControl, WindowLifecycle};
 use gridthorn_world::{ScheduleBuilder, ScheduleRuntime, ScheduleStage};
 
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
@@ -45,16 +45,18 @@ impl ScheduleLifecycle {
 }
 
 impl WindowLifecycle for ScheduleLifecycle {
-    fn started(&mut self, _control: &mut WindowControl) {
+    fn started(&mut self, _control: &mut WindowControl) -> Result<(), ApplicationError> {
         self.runtime.run_startup();
+        Ok(())
     }
 
-    fn idle(&mut self, control: &mut WindowControl) {
+    fn idle(&mut self, control: &mut WindowControl) -> Result<(), ApplicationError> {
         self.runtime.run_fixed_update();
         self.runtime.run_update();
         if self.smoke_enabled && self.counts().is_some_and(|counts| counts.update >= 3) {
             control.exit();
         }
+        Ok(())
     }
 }
 

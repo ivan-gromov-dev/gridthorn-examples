@@ -1,4 +1,4 @@
-use gridthorn_app::{WindowControl, WindowLifecycle};
+use gridthorn_app::{ApplicationError, WindowControl, WindowLifecycle};
 use tracing::info;
 
 const UPDATE_LIMIT: u32 = 3;
@@ -10,17 +10,18 @@ pub(crate) struct DiagnosticLifecycle {
 }
 
 impl WindowLifecycle for DiagnosticLifecycle {
-    fn started(&mut self, _control: &mut WindowControl) {
+    fn started(&mut self, _control: &mut WindowControl) -> Result<(), ApplicationError> {
         info!(
             component = "example",
             event = "started",
             "diagnostics example lifecycle started"
         );
+        Ok(())
     }
 
-    fn idle(&mut self, control: &mut WindowControl) {
+    fn idle(&mut self, control: &mut WindowControl) -> Result<(), ApplicationError> {
         if self.updates >= UPDATE_LIMIT {
-            return;
+            return Ok(());
         }
         self.updates += 1;
         if self.updates >= UPDATE_LIMIT {
@@ -32,6 +33,7 @@ impl WindowLifecycle for DiagnosticLifecycle {
             );
             control.exit();
         }
+        Ok(())
     }
 }
 

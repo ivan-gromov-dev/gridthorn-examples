@@ -3,6 +3,7 @@ members = [
     "deterministic-replay",
     "diagnostics-flow",
     "headless-schedule",
+    "runtime-input",
     "schedule-loop",
     "window-surface",
 ]

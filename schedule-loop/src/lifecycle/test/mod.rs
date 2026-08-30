@@ -7,8 +7,10 @@ fn window_lifecycle_runs_startup_fixed_and_update_schedules() {
     let mut lifecycle = ScheduleLifecycle::new(false);
     let mut control = WindowControl::default();
 
-    lifecycle.started(&mut control);
-    lifecycle.idle(&mut control);
+    lifecycle
+        .started(&mut control)
+        .expect("lifecycle should start");
+    lifecycle.idle(&mut control).expect("frame should run");
 
     assert_eq!(
         lifecycle.counts(),
@@ -24,11 +26,13 @@ fn window_lifecycle_runs_startup_fixed_and_update_schedules() {
 fn smoke_lifecycle_requests_exit_after_three_updates() {
     let mut lifecycle = ScheduleLifecycle::new(true);
     let mut control = WindowControl::default();
-    lifecycle.started(&mut control);
+    lifecycle
+        .started(&mut control)
+        .expect("lifecycle should start");
 
-    lifecycle.idle(&mut control);
-    lifecycle.idle(&mut control);
-    lifecycle.idle(&mut control);
+    lifecycle.idle(&mut control).expect("frame should run");
+    lifecycle.idle(&mut control).expect("frame should run");
+    lifecycle.idle(&mut control).expect("frame should run");
 
     assert_eq!(lifecycle.counts().map(|counts| counts.update), Some(3));
 }

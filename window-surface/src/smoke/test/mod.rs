@@ -9,8 +9,10 @@ fn disabled_smoke_lifecycle_is_inert() {
     let mut lifecycle = SmokeLifecycle::new(false);
     let mut control = WindowControl::default();
 
-    lifecycle.started(&mut control);
-    lifecycle.idle(&mut control);
+    lifecycle
+        .started(&mut control)
+        .expect("lifecycle should start");
+    lifecycle.idle(&mut control).expect("frame should run");
 
     assert_eq!(lifecycle.phase, SmokePhase::Resize);
 }
@@ -21,7 +23,7 @@ fn due_smoke_lifecycle_requests_resize_first() {
     lifecycle.deadline = Instant::now();
     let mut control = WindowControl::default();
 
-    lifecycle.idle(&mut control);
+    lifecycle.idle(&mut control).expect("frame should run");
 
     assert_eq!(lifecycle.phase, SmokePhase::Minimize);
 }

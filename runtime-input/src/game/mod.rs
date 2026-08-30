@@ -1,8 +1,9 @@
 mod model;
 
 use gridthorn::prelude::{
-    ApplicationRuntime, Camera2d, Color, ExitRequest, GameCommandQueue, InputState, KeyCode,
-    RenderFrame, ScheduleBuilder, ScheduleStage, TextureAsset, TexturedSprite,
+    ApplicationRuntime, Camera2d, Color, ExitRequest, FrameTiming, GameCommandQueue, InputState,
+    KeyCode, RenderFrame, ScheduleBuilder, ScheduleStage, TextureAsset, TexturedSprite,
+    TimingOverlay,
 };
 
 use model::{Controlled, MovementIntent, PlayerCommand, Position, SmokeState};
@@ -76,16 +77,25 @@ pub(crate) fn runtime(smoke_enabled: bool) -> ApplicationRuntime {
                 .read_resource(|controlled: &Controlled| controlled.0)
                 .and_then(|entity| world.read_component(entity, |position: &Position| *position))
                 .unwrap_or_default();
-            world.insert_resource(
-                RenderFrame::new(Camera2d::default(), Vec::new()).with_textured_sprites(vec![
+            let timing = world.read_resource(|timing: &FrameTiming| *timing);
+            let mut frame = RenderFrame::new(Camera2d::default(), Vec::new())
+                .with_textured_sprites(vec![
                     TexturedSprite::new(
                         [f32::from(position.x), f32::from(position.y)],
                         [32.0, 32.0],
                         texture.clone(),
                     )
                     .with_tint(Color::rgb(0.95, 0.75, 0.4)),
-                ]),
-            );
+                ]);
+            if let Some(timing) = timing {
+                frame = frame.with_timing_overlay(TimingOverlay::new(
+                    timing.frame_elapsed(),
+                    timing.fixed_steps(),
+                    timing.accumulated_lag(),
+                    timing.overloaded(),
+                ));
+            }
+            world.insert_resource(frame);
         });
     ApplicationRuntime::new(schedules.build())
 }

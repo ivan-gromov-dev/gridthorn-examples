@@ -2,13 +2,17 @@ mod model;
 
 use gridthorn::prelude::{
     ApplicationRuntime, Camera2d, Color, ExitRequest, GameCommandQueue, InputState, KeyCode,
-    RenderFrame, ScheduleBuilder, ScheduleStage, Sprite,
+    RenderFrame, ScheduleBuilder, ScheduleStage, TextureAsset, TexturedSprite,
 };
 
 use model::{Controlled, MovementIntent, PlayerCommand, Position, SmokeState};
 
 /// Build the controllable runtime slice from public Gridthorn APIs.
 pub(crate) fn runtime(smoke_enabled: bool) -> ApplicationRuntime {
+    let texture = TextureAsset::load(
+        std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("assets/player.ppm"),
+    )
+    .expect("example player texture must load");
     let mut schedules = ScheduleBuilder::new();
     schedules
         .add_system(ScheduleStage::Startup, move |world| {
@@ -67,19 +71,21 @@ pub(crate) fn runtime(smoke_enabled: bool) -> ApplicationRuntime {
                 world.update_resource(|exit: &mut ExitRequest| exit.request());
             }
         })
-        .add_system(ScheduleStage::Render, |world| {
+        .add_system(ScheduleStage::Render, move |world| {
             let position = world
                 .read_resource(|controlled: &Controlled| controlled.0)
                 .and_then(|entity| world.read_component(entity, |position: &Position| *position))
                 .unwrap_or_default();
-            world.insert_resource(RenderFrame::new(
-                Camera2d::default(),
-                vec![Sprite::new(
-                    [f32::from(position.x), f32::from(position.y)],
-                    [32.0, 32.0],
-                    Color::rgb(0.95, 0.55, 0.18),
-                )],
-            ));
+            world.insert_resource(
+                RenderFrame::new(Camera2d::default(), Vec::new()).with_textured_sprites(vec![
+                    TexturedSprite::new(
+                        [f32::from(position.x), f32::from(position.y)],
+                        [32.0, 32.0],
+                        texture.clone(),
+                    )
+                    .with_tint(Color::rgb(0.95, 0.75, 0.4)),
+                ]),
+            );
         });
     ApplicationRuntime::new(schedules.build())
 }

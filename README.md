@@ -6,6 +6,8 @@ Every example owns a top-level directory and Cargo package:
 
 ```text
 gridthorn-examples/
+├── asset-reload/
+├── collision-basics/
 ├── deterministic-replay/
 ├── diagnostics-flow/
 ├── headless-schedule/
@@ -30,6 +32,15 @@ Run the ECS lifecycle schedule example:
 cargo run -p gridthorn_example_schedule_loop
 ```
 
+Run texture hot reload with dependency diagnostics, or its headless file-edit smoke:
+
+```console
+cargo run -p gridthorn_example_asset_reload
+cargo run -p gridthorn_example_asset_reload -- --smoke
+```
+
+See [asset-reload](asset-reload/README.md) for editable fixtures and limitations.
+
 Use `-- --smoke` to run three updates and close the window automatically.
 
 Run the same fixed-update schedule boundary without an application or renderer:
@@ -49,4 +60,21 @@ Run the same fixed-step command stream twice and verify its state fingerprint:
 
 ```console
 cargo run -p gridthorn_example_deterministic_replay
+```
+
+Run engine-owned circle and axis-aligned box collision queries without a
+window, renderer, or physics backend:
+
+```console
+cargo run -p gridthorn_example_collision_basics
+```
+
+Run the read-only component/resource reflection example:
+
+cargo run -p gridthorn_example_reflection_basics
+
+Run the headless versioned scene round-trip, rejected-edit, and migration example:
+
+```console
+cargo run -p gridthorn_example_scene_serialization
 ```

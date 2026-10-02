@@ -2,6 +2,30 @@
 
 Runnable examples for the sibling `gridthorn-engine` repository.
 
+Run the provisional [world save/load example](world-saving/README.md):
+
+```console
+cargo run -p gridthorn_example_world_saving
+```
+
+Run the provisional [scenario/snapshot example](scenarios-snapshots/README.md):
+
+```console
+cargo run -p gridthorn_example_scenarios_snapshots
+```
+
+Run the provisional [headless simulation example](headless-simulation/README.md):
+
+```console
+cargo run -p gridthorn_example_headless_simulation
+```
+
+Run the provisional [object placement example](grid-placement/README.md):
+
+```console
+cargo run -p gridthorn_example_grid_placement
+```
+
 Run the provisional [tilemap example](tilemap-basics/README.md) without a window:
 
 ```console
@@ -97,4 +121,14 @@ Run the headless versioned scene round-trip, rejected-edit, and migration exampl
 
 ```console
 cargo run -p gridthorn_example_scene_serialization
+```
+
+Provisional weighted navigation and square/isometric SVG diagnostics:
+`cargo run -p gridthorn_example_pathfinding`.
+See [pathfinding](pathfinding/README.md).
+
+Run [simulation clock controls](simulation-clock/README.md):
+
+```console
+cargo run -p gridthorn_example_simulation_clock
 ```

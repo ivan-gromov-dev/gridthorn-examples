@@ -1,0 +1,11 @@
+format_version = 1
+
+[project]
+name = "gridthorn_example_scenarios_snapshots"
+
+[engine]
+version = "0.2.0"
+
+[simulation]
+binary = "scenario-headless"
+scenarios = ["economy"]

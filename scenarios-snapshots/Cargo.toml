@@ -1,0 +1,20 @@
+[package]
+name = "gridthorn_example_scenarios_snapshots"
+default-run = "gridthorn_example_scenarios_snapshots"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+gridthorn = { path = "../../gridthorn-engine/crates/gridthorn", version = "0.2.0" }
+
+[[bin]]
+name = "scenario-headless"
+path = "src/headless.rs"
+
+[lints]
+workspace = true
+
+

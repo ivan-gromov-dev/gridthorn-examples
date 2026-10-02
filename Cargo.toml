@@ -1,5 +1,11 @@
 [workspace]
 members = [
+    "world-saving",
+    "scenarios-snapshots",
+    "headless-simulation",
+    "simulation-clock",
+    "pathfinding",
+    "grid-placement",
     "tilemap-basics",
     "classic_2d",
     "grid-coordinates",
@@ -33,3 +39,4 @@ unsafe_code = "forbid"
 [workspace.lints.clippy]
 all = { level = "deny", priority = -1 }
 pedantic = { level = "deny", priority = -1 }
+

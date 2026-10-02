@@ -90,7 +90,7 @@ dependencies = [
  "ndk-context",
  "ndk-sys",
  "num_enum",
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
 ]
 
 [[package]]
@@ -226,7 +226,7 @@ dependencies = [
  "serde",
  "slotmap",
  "smallvec",
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
  "variadics_please",
 ]
 
@@ -315,7 +315,7 @@ dependencies = [
  "serde",
  "smallvec",
  "smol_str",
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
  "uuid",
  "variadics_please",
  "wgpu-types 29.0.4",
@@ -1036,7 +1036,7 @@ dependencies = [
  "hashbrown 0.16.1",
  "log",
  "presser",
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
  "windows",
 ]
 
@@ -1064,7 +1064,9 @@ dependencies = [
  "gridthorn_render",
  "gridthorn_simulation",
  "gridthorn_world",
- "thiserror 2.0.20",
+ "serde",
+ "thiserror 2.0.21",
+ "toml",
  "tracing",
  "winit",
 ]
@@ -1074,7 +1076,7 @@ name = "gridthorn_assets"
 version = "0.2.0"
 dependencies = [
  "image",
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
 ]
 
 [[package]]
@@ -1082,14 +1084,14 @@ name = "gridthorn_audio"
 version = "0.2.0"
 dependencies = [
  "kira",
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
 ]
 
 [[package]]
 name = "gridthorn_collision"
 version = "0.2.0"
 dependencies = [
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
 ]
 
 [[package]]
@@ -1131,10 +1133,31 @@ dependencies = [
 ]
 
 [[package]]
+name = "gridthorn_example_grid_placement"
+version = "0.1.0"
+dependencies = [
+ "gridthorn",
+]
+
+[[package]]
 name = "gridthorn_example_headless_schedule"
 version = "0.1.0"
 dependencies = [
  "gridthorn_world",
+]
+
+[[package]]
+name = "gridthorn_example_headless_simulation"
+version = "0.1.0"
+dependencies = [
+ "gridthorn",
+]
+
+[[package]]
+name = "gridthorn_example_pathfinding"
+version = "0.1.0"
+dependencies = [
+ "gridthorn",
 ]
 
 [[package]]
@@ -1146,6 +1169,13 @@ dependencies = [
 
 [[package]]
 name = "gridthorn_example_runtime_input"
+version = "0.1.0"
+dependencies = [
+ "gridthorn",
+]
+
+[[package]]
+name = "gridthorn_example_scenarios_snapshots"
 version = "0.1.0"
 dependencies = [
  "gridthorn",
@@ -1168,6 +1198,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "gridthorn_example_simulation_clock"
+version = "0.1.0"
+dependencies = [
+ "gridthorn",
+]
+
+[[package]]
 name = "gridthorn_example_tilemap_basics"
 version = "0.1.0"
 dependencies = [
@@ -1183,10 +1220,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "gridthorn_example_world_saving"
+version = "0.1.0"
+dependencies = [
+ "gridthorn",
+]
+
+[[package]]
 name = "gridthorn_grid"
 version = "0.2.0"
 dependencies = [
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
 ]
 
 [[package]]
@@ -1200,7 +1244,7 @@ dependencies = [
  "bytemuck",
  "gridthorn_assets",
  "pollster",
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
  "tracing",
  "wgpu",
  "windows",
@@ -1213,7 +1257,7 @@ dependencies = [
  "gridthorn_world",
  "semver",
  "serde",
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
  "toml",
 ]
 
@@ -1221,7 +1265,7 @@ dependencies = [
 name = "gridthorn_simulation"
 version = "0.2.0"
 dependencies = [
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
 ]
 
 [[package]]
@@ -1229,7 +1273,7 @@ name = "gridthorn_world"
 version = "0.2.0"
 dependencies = [
  "bevy_ecs",
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
 ]
 
 [[package]]
@@ -1327,7 +1371,7 @@ dependencies = [
  "jni-sys 0.4.1",
  "log",
  "simd_cesu8",
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
  "walkdir",
  "windows-link",
 ]
@@ -1413,9 +1457,9 @@ checksum = "e2db585e1d738fc771bf08a151420d3ed193d9d895a36df7f6f8a9456b911ddc"
 
 [[package]]
 name = "kira"
-version = "0.12.4"
+version = "0.12.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fca8be8ab571564019979c2a010cca84e43fe94923681cf062d2fe22a9cf6ef2"
+checksum = "aae7115ef1161313b8f71f49487702a662ab333bd2a47bf69af410b69112a519"
 dependencies = [
  "atomic-arena",
  "cpal",
@@ -1588,7 +1632,7 @@ dependencies = [
  "once_cell",
  "rustc-hash",
  "spirv",
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
  "unicode-ident",
 ]
 
@@ -1601,7 +1645,7 @@ dependencies = [
  "hashbrown 0.17.1",
  "indexmap",
  "rustc-hash",
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
 ]
 
 [[package]]
@@ -2331,9 +2375,9 @@ checksum = "19b30a45b0cd0bcca8037f3d0dc3421eaf95327a17cad11964fb8179b4fc4832"
 
 [[package]]
 name = "rtrb"
-version = "0.3.5"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fae8ee26b0371a29a77d2b2d6b3ae13aa81def6f9bf1b1b92a32d279a5e709b7"
+checksum = "9278fb35b3e730abe136e9b395b5b81b96d06b9f5478a50f0c8430a2237b22de"
 
 [[package]]
 name = "rustc-hash"
@@ -2637,11 +2681,11 @@ dependencies = [
 
 [[package]]
 name = "thiserror"
-version = "2.0.20"
+version = "2.0.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec86235f5fcc2a73650310756d2ac5b138a5780bbbdfae3eeccec992c435ba4f"
+checksum = "09e52cb86a36cede5cb101bf8908837b3e4c6e5e59fe7fd85c23fb56200d189e"
 dependencies = [
- "thiserror-impl 2.0.20",
+ "thiserror-impl 2.0.21",
 ]
 
 [[package]]
@@ -2657,9 +2701,9 @@ dependencies = [
 
 [[package]]
 name = "thiserror-impl"
-version = "2.0.20"
+version = "2.0.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bc04cd3e1236dd4a98afca4569f2deb3f120e5422a4023be2cb683f8486292af"
+checksum = "fe5197923287db20a58125f0bc85c062f7f2c892de97b18c356f9efb14b28524"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -3162,7 +3206,7 @@ dependencies = [
  "raw-window-handle",
  "rustc-hash",
  "smallvec",
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
  "wgpu-core-deps-apple",
  "wgpu-core-deps-emscripten",
  "wgpu-core-deps-windows-linux-android",
@@ -3243,7 +3287,7 @@ dependencies = [
  "renderdoc-sys",
  "smallvec",
  "static_assertions",
- "thiserror 2.0.20",
+ "thiserror 2.0.21",
  "wasm-bindgen",
  "wayland-sys",
  "web-sys",

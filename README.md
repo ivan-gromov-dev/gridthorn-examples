@@ -2,6 +2,26 @@
 
 Runnable examples for the sibling `gridthorn-engine` repository.
 
+Run the provisional [tilemap example](tilemap-basics/README.md) without a window:
+
+```console
+cargo run -p gridthorn_example_tilemap_basics
+```
+
+Run the provisional [grid coordinate example](grid-coordinates/README.md)
+without a window:
+
+```console
+cargo run -p gridthorn_example_grid_coordinates
+```
+
+Play [Crystal Trail](classic_2d/README.md), the basic 2D integration game:
+
+```console
+cargo run -p classic_2d
+cargo run -p classic_2d -- --headless-smoke
+```
+
 Every example owns a top-level directory and Cargo package:
 
 ```text

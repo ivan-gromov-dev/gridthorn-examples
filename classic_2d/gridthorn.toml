@@ -1,0 +1,6 @@
+format_version = 1
+[project]
+name = "classic_2d"
+[engine]
+version = "^0.2.0"
+

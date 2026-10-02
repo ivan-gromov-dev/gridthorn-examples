@@ -1,5 +1,8 @@
 [workspace]
 members = [
+    "tilemap-basics",
+    "classic_2d",
+    "grid-coordinates",
     "asset-reload",
     "collision-basics",
     "reflection-basics",

@@ -1,0 +1,15 @@
+[package]
+name = "classic_2d"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+gridthorn = { path = "../../gridthorn-engine/crates/gridthorn", version = "0.2.0" }
+gridthorn_audio = { path = "../../gridthorn-engine/crates/gridthorn_audio", features = ["native-output"] }
+
+[lints]
+workspace = true
+

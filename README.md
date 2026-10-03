@@ -2,6 +2,49 @@
 
 Runnable examples for the sibling `gridthorn-engine` repository.
 
+Run the provisional [composed controls example](composed-controls/README.md):
+
+```console
+cargo run -p gridthorn_example_composed_controls --locked
+cargo run -p gridthorn_example_composed_controls --locked -- --headless
+```
+
+Run the provisional [localization runtime example](localization/README.md):
+
+```console
+cargo run -p gridthorn_example_localization --locked
+```
+
+Run the provisional [multilingual font example](multilingual-text/README.md):
+
+```console
+cargo run -p gridthorn_example_multilingual_text
+cargo run -p gridthorn_example_multilingual_text -- --headless
+```
+
+Run the provisional [Unicode/IME input example](text-input/README.md):
+
+```console
+cargo run -p gridthorn_example_text_input
+cargo run -p gridthorn_example_text_input -- --headless
+```
+
+Run the provisional [desktop input monitor](desktop-input/README.md), with no GPU initialization:
+
+```console
+cargo run -p gridthorn_example_desktop_input
+cargo run -p gridthorn_example_desktop_input -- --headless
+```
+
+Play [Timber Harbor](tycoon_slice/README.md), the integrated Milestone 3 tycoon
+showcase with original workforce/UI assets, housed employees, resource-specific
+ports, a pause/save/load menu and diagnostics:
+
+```console
+cargo run -p tycoon_slice
+cargo run -p tycoon_slice -- --headless-smoke
+```
+
 Run the provisional [world save/load example](world-saving/README.md):
 
 ```console

@@ -1,0 +1,13 @@
+[package]
+name = "gridthorn_example_localization"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+gridthorn = { path = "../../gridthorn-engine/crates/gridthorn" }
+
+[lints]
+workspace = true

@@ -1,0 +1,6 @@
+Timber Harbor presentation skin v1.
+The shared generated RGBA atlas is a development dependency of this source.
+Replacing harbor-atlas.png reloads this source and the texture atomically.
+
+workforce=harbor-expansion.png
+interface=harbor-ui.png

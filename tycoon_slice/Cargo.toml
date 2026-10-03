@@ -1,0 +1,19 @@
+[package]
+name = "tycoon_slice"
+default-run = "tycoon_slice"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+gridthorn = { path = "../../gridthorn-engine/crates/gridthorn", version = "0.2.0", features = ["grid"] }
+gridthorn_audio = { path = "../../gridthorn-engine/crates/gridthorn_audio", features = ["native-output"] }
+
+[[bin]]
+name = "harbor-headless"
+path = "src/headless.rs"
+
+[lints]
+workspace = true

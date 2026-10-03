@@ -1,0 +1,11 @@
+format_version = 1
+
+[project]
+name = "tycoon_slice"
+
+[engine]
+version = "0.2.0"
+
+[simulation]
+binary = "harbor-headless"
+scenarios = ["harbor", "sandbox"]

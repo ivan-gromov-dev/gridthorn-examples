@@ -1,5 +1,11 @@
 [workspace]
 members = [
+    "composed-controls",
+    "localization",
+    "multilingual-text",
+    "text-input",
+    "desktop-input",
+    "tycoon_slice",
     "world-saving",
     "scenarios-snapshots",
     "headless-simulation",
@@ -39,4 +45,3 @@ unsafe_code = "forbid"
 [workspace.lints.clippy]
 all = { level = "deny", priority = -1 }
 pedantic = { level = "deny", priority = -1 }
-

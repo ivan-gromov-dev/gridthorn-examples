@@ -1284,6 +1284,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "gridthorn_example_desktop_displays"
+version = "0.1.0"
+dependencies = [
+ "gridthorn",
+]
+
+[[package]]
 name = "gridthorn_example_desktop_input"
 version = "0.1.0"
 dependencies = [

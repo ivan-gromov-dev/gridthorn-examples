@@ -1,5 +1,8 @@
 # Gridthorn Examples Repository Instructions
 
+- Follow [AI_WORKFLOW.md](AI_WORKFLOW.md) for verification and cleanup of
+  generated build artifacts at task completion.
+
 - Store every example in its own top-level directory with its own `Cargo.toml`
   and focused source tree.
 - Examples consume Gridthorn APIs as external game projects would. Do not use

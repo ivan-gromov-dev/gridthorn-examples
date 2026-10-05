@@ -2,6 +2,12 @@
 
 Runnable examples for the sibling `gridthorn-engine` repository.
 
+Run the [game settings menu and desktop displays](desktop-displays/README.md):
+
+```console
+cargo run -p gridthorn_example_desktop_displays --locked
+```
+
 Run the integrated [multilingual workbench](multilingual-workbench/README.md),
 with four languages, Unicode editing, localization, six controls and nested windows:
 

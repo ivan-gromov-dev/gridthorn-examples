@@ -2,13 +2,20 @@ use gridthorn::{AudioClip, AudioCommandQueue, PlaybackSettings};
 use std::sync::{Arc, Mutex, mpsc};
 use std::thread::JoinHandle;
 
+mod pause_state;
+use pause_state::PauseState;
+
+#[cfg(test)]
+mod test;
+
 enum Request {
     Pickup,
-    Pause(bool),
+    Wake,
     Shutdown,
 }
 
 struct Worker {
+    pause: Arc<PauseState>,
     sender: Option<mpsc::SyncSender<Request>>,
     thread: Mutex<Option<JoinHandle<()>>>,
 }
@@ -27,10 +34,12 @@ pub(crate) struct Sound(Arc<Worker>);
 
 impl Sound {
     pub fn new(native: bool) -> Result<Self, Box<dyn std::error::Error>> {
-        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("assets");
+        let path = crate::assets::directory()?;
         let pickup = AudioClip::load_wav(path.join("pickup.wav"))?;
         let music = AudioClip::load_wav(path.join("music.wav"))?;
         let (sender, receiver) = mpsc::sync_channel(32);
+        let pause = Arc::new(PauseState::default());
+        let worker_pause = Arc::clone(&pause);
         let thread = std::thread::spawn(move || {
             let mut output = if native {
                 match gridthorn_audio::AudioOutput::new() {
@@ -52,6 +61,15 @@ impl Sound {
                 .expect("music voice");
             let mut effect = None;
             while let Ok(request) = receiver.recv() {
+                if let Some(paused) = worker_pause.take()
+                    && let Some(output) = output.as_mut()
+                {
+                    if paused {
+                        output.suspend();
+                    } else {
+                        output.resume();
+                    }
+                }
                 match request {
                     Request::Shutdown => break,
                     Request::Pickup => {
@@ -67,15 +85,7 @@ impl Sound {
                                 .expect("effect voice"),
                         );
                     }
-                    Request::Pause(paused) => {
-                        if let Some(output) = output.as_mut() {
-                            if paused {
-                                output.suspend();
-                            } else {
-                                output.resume();
-                            }
-                        }
-                    }
+                    Request::Wake => {}
                 }
                 if let Some(output) = output.as_mut() {
                     if let Err(error) = output.process(&mut queue) {
@@ -94,6 +104,7 @@ impl Sound {
             }
         });
         Ok(Self(Arc::new(Worker {
+            pause,
             sender: Some(sender),
             thread: Mutex::new(Some(thread)),
         })))
@@ -120,11 +131,12 @@ impl Sound {
         }
     }
     pub fn pause(&self, paused: bool) {
+        self.0.pause.publish(paused);
         let _ = self
             .0
             .sender
             .as_ref()
             .expect("live audio worker")
-            .try_send(Request::Pause(paused));
+            .try_send(Request::Wake);
     }
 }

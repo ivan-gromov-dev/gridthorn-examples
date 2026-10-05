@@ -1,5 +1,6 @@
 [workspace]
 members = [
+    "multilingual-workbench",
     "composed-controls",
     "localization",
     "multilingual-text",

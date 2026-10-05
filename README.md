@@ -2,6 +2,15 @@
 
 Runnable examples for the sibling `gridthorn-engine` repository.
 
+Run the integrated [multilingual workbench](multilingual-workbench/README.md),
+with four languages, Unicode editing, localization, six controls and nested windows:
+
+```console
+cargo run -p gridthorn_example_multilingual_workbench --locked
+cargo run -p gridthorn_example_multilingual_workbench --locked -- --headless
+cargo run -p gridthorn_example_multilingual_workbench --locked -- --smoke
+```
+
 Run the provisional [composed controls example](composed-controls/README.md):
 
 ```console

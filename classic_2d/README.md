@@ -22,12 +22,30 @@ player, crystal, and wall sprites share one cloned atlas for the batching path.
 Bitmap labels, a mouse button, and a timing overlay exercise runtime UI.
 
 The original atlas and PCM16 WAV assets are included locally and may be reused
-under this repository's license. Paths resolve relative to the package, so
-launching from another working directory works. Native audio runs on an
+under this repository's license. An `assets` directory beside the executable
+takes priority over the source package's assets. To relocate a build, copy the
+executable and the complete `assets` directory together. Without an adjacent
+directory, development runs use the source package's assets. A present but
+incomplete adjacent directory produces a load error instead of falling back.
+Asset resolution is independent of the working directory. This does not bundle
+platform runtimes or establish clean-machine deployment support. Native audio runs on an
 example-owned worker using the public `gridthorn_audio` native-output service.
 Pause suspends voices; resume restores them; Shutdown stops voices and joins
 the worker. Missing audio devices produce a diagnostic and allow silent play.
 Headless smoke decodes the same assets without opening a device or window.
+
+The worker queue holds 32 requests. Pickup submission is nonblocking and effects
+can be discarded when it is full. Pause/resume publishes the latest state in a
+separate atomic mailbox before requesting a wake. A full queue already contains
+requests that will trigger consumption; stale wakes do not restore old states.
+Intermediate pause transitions may coalesce. Shutdown waits for delivery and
+joins the worker. Application latency still depends on worker progress.
+An ignored release probe measures headless submission/shutdown and a separately
+gated transport fixture; it does not measure device latency:
+
+```console
+cargo test -p classic_2d --release --locked measure_audio_worker_handoff -- --ignored --nocapture
+```
 
 Tests cover movement bounds, blocking walls, one-shot pickup, pause, victory,
 scene cleanup, restart, and headless render extraction. `--smoke` opens a real

@@ -9,9 +9,7 @@ pub(crate) struct Assets {
 
 impl Assets {
     pub fn load() -> Result<Self, Box<dyn std::error::Error>> {
-        let texture = TextureAsset::load(
-            std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("assets/atlas.ppm"),
-        )?;
+        let texture = TextureAsset::load(crate::assets::directory()?.join("atlas.ppm"))?;
         let animation = AnimationPlayer::new(AnimationClip::new(
             vec![region(0), region(1)],
             Duration::from_millis(180),

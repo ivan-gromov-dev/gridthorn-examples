@@ -1,3 +1,4 @@
+mod assets;
 mod audio;
 mod game;
 mod presentation;

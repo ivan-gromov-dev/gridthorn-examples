@@ -12,10 +12,15 @@ pub(super) enum Section {
 pub(super) enum Request {
     Refresh,
     Configure(WindowRequest),
+    Present(gridthorn::presentation::PresentationConfig),
+    SaveAdapter,
     Exit,
 }
 
 pub(super) struct Settings {
+    pub adapters: Option<gridthorn::GraphicsAdapters>,
+    pub graphics_selection: gridthorn::GraphicsSelection,
+    pub adapter_status: String,
     pub section: Section,
     pub monitors: Vec<MonitorInfo>,
     pub selected: Option<MonitorId>,
@@ -24,11 +29,15 @@ pub(super) struct Settings {
     pub waiting: bool,
     pub applying: bool,
     pub graphics: GraphicsSettings,
+    pub pacing: super::frame_pacing::FramePacing,
     pub status: String,
 }
 impl Default for Settings {
     fn default() -> Self {
         Self {
+            adapters: None,
+            graphics_selection: gridthorn::GraphicsSelection::default(),
+            adapter_status: "Выберите GPU и сохраните выбор для следующего запуска.".into(),
             section: Section::Graphics,
             monitors: Vec::new(),
             selected: None,
@@ -37,6 +46,7 @@ impl Default for Settings {
             waiting: true,
             applying: false,
             graphics: GraphicsSettings::default(),
+            pacing: super::frame_pacing::FramePacing::default(),
             status: "Получаем список мониторов…".into(),
         }
     }
@@ -93,7 +103,7 @@ impl Settings {
         }
     }
     pub fn busy(&self) -> bool {
-        self.waiting || self.applying
+        self.waiting || self.applying || self.pacing.applying
     }
     pub fn chosen(&self) -> Option<&MonitorInfo> {
         self.monitors
@@ -156,6 +166,7 @@ impl Settings {
         if !self.busy() {
             self.selected = self.active;
             self.graphics.reset();
+            self.pacing.reset();
         }
     }
 }

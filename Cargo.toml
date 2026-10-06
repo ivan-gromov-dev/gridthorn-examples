@@ -1,5 +1,6 @@
 [workspace]
 members = [
+    "controllers",
     "desktop-displays",
     "multilingual-workbench",
     "composed-controls",

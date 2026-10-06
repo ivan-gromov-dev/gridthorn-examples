@@ -2,6 +2,9 @@
 
 Runnable examples for the sibling `gridthorn-engine` repository.
 
+The [controller monitor](controllers/README.md) demonstrates discovery, hotplug,
+UI navigation and explicit rumble, with headless and native discovery smoke.
+
 Run the [game settings menu and desktop displays](desktop-displays/README.md):
 
 ```console

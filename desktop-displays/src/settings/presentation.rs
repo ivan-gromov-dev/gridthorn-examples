@@ -33,7 +33,18 @@ impl Menu {
         })
     }
     pub fn rebuild(&mut self) -> Result<(), UiCompositionError> {
-        self.tree = composition::tree(&self.model)?;
+        let mut tree = composition::tree(&self.model)?;
+        for id in [UiNodeId(5), composition::ADAPTERS, composition::RENDER_API] {
+            if let Some(previous) = self.tree.node(id)
+                && tree.node(id).is_some()
+            {
+                tree.command(
+                    id,
+                    gridthorn::ui::UiCommand::ScrollTo(previous.scroll_offset),
+                )?;
+            }
+        }
+        self.tree = tree;
         self.dirty = true;
         Ok(())
     }
@@ -111,7 +122,21 @@ impl Menu {
                 }
                 (composition::APPLY, UiEffect::Activated) => {
                     changed = true;
-                    self.model.apply()
+                    let request = self.model.apply();
+                    if request.is_some()
+                        && let Some(pacing) = self.model.pacing.request()
+                    {
+                        requests.push(pacing);
+                    }
+                    request
+                }
+                (composition::APPLY_PRESENTATION, UiEffect::Activated) => {
+                    changed = true;
+                    if self.model.busy() {
+                        None
+                    } else {
+                        self.model.pacing.request()
+                    }
                 }
                 (composition::RESET, UiEffect::Activated) => {
                     changed = true;
@@ -119,6 +144,25 @@ impl Menu {
                     None
                 }
                 (composition::CLOSE, UiEffect::Activated) => Some(Request::Exit),
+                (composition::SAVE_ADAPTER, UiEffect::Activated) => Some(Request::SaveAdapter),
+                (composition::RENDER_API, UiEffect::Changed) => {
+                    if let Some(node) = self.tree.node(composition::RENDER_API)
+                        && let UiControl::List { selected, .. } = node.control
+                    {
+                        self.model.choose_api(selected);
+                        changed = true;
+                    }
+                    None
+                }
+                (composition::ADAPTERS, UiEffect::Changed) => {
+                    if let Some(node) = self.tree.node(composition::ADAPTERS)
+                        && let UiControl::List { selected, .. } = node.control
+                    {
+                        self.model.choose_adapter(selected);
+                        changed = true;
+                    }
+                    None
+                }
                 (composition::MONITORS, UiEffect::Changed) => {
                     if let Some(node) = self.tree.node(composition::MONITORS)
                         && let UiControl::List { selected, .. } = node.control
@@ -144,6 +188,14 @@ impl Menu {
     }
     fn graphics_effect(&mut self, id: UiNodeId, effect: UiEffect) -> bool {
         match (id, effect) {
+            (composition::VSYNC, UiEffect::Activated) => return self.model.pacing.toggle_vsync(),
+            (composition::PRESENT_MODE, UiEffect::Activated) => {
+                return self.model.pacing.cycle_mode();
+            }
+            (composition::FPS_CAP, UiEffect::Activated) => {
+                self.model.pacing.cycle_cap();
+                return true;
+            }
             (composition::MODE, UiEffect::Activated) => {
                 let modes = self.model.graphics.modes();
                 let index = modes
